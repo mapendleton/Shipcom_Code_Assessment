@@ -1,0 +1,6 @@
+@Shipcom_Code_Assessment_HostAddress = http://localhost:5074
+
+GET {{Shipcom_Code_Assessment_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
