@@ -3,7 +3,7 @@ using System.Net;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Xunit;
 
-namespace Shipcom_Code_Assessment.Controllers;
+namespace Shipcom_Code_Assessment.ControllerTests;
 
 public class TimeAngleControllerTests : IClassFixture<WebApplicationFactory<Program>>
 {

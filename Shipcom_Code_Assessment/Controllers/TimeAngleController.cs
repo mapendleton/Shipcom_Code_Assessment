@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Shipcom_Code_Assessment.Models;
 
 namespace Shipcom_Code_Assessment.Controllers;
 
@@ -22,14 +23,15 @@ public class TimeAngleController : ControllerBase
        /// <param name="hour">24 hours in a day, 0 representing 12 AM (Midnight) and 23 representing 11 PM. A number outside that range will return a 400</param>
        /// <param name="minute">60 minutes in an hour, any number outside 0 - 59 will return a 400</param>
        /// <returns>The sum of the hour hand and minute hand angles.</returns>
+       /// <response code="400">If hour or minute is out of range</response>
        [HttpGet("/calculateTimeAngle/{hour}/{minute}")]
        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(double))]
-       [ProducesResponseType(StatusCodes.Status400BadRequest)]
+       [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
        public ActionResult<double> GetTimeAngleCalculation(int hour, int minute)
        {
               if (hour < 0 || hour > 23 || minute < 0 || minute > 59)
               {
-                     return BadRequest("Invalid hour/minute, hour must be between 0 and 23 and minute must be between 0 and 59");
+                     return BadRequest(new ErrorResponse("Invalid hour/minute, hour must be between 0 and 23 and minute must be between 0 and 59"));
               }
               
               return CalculateTimeAngle(hour, minute);
