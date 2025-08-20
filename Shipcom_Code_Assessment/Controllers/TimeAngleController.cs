@@ -5,6 +5,13 @@ using Shipcom_Code_Assessment.Services;
 
 namespace Shipcom_Code_Assessment.Controllers;
 
+/// <summary>
+/// Controller with endpoints that calculate the angle of the clock hands based on time passed in.
+/// </summary>
+/// <remarks>
+/// Currently using try/catch to grab validation error from service. Would probably want to set up some middleware to handle the exceptions instead
+/// but not sure how deep I need to go for this.
+/// </remarks>
 [ApiController]
 [ApiVersion("1.0")]
 [Route("v{version:apiVersion}/[controller]")]
@@ -26,8 +33,17 @@ public class TimeAngleController : ControllerBase
        [MapToApiVersion("1.0")]
        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(double))]
        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-       public ActionResult<double> GetTimeAngleCalculationFromDateTime([FromQuery] DateTime time) => 
-              _clockAngleService.CalculateTimeAngle(time.Hour, time.Minute);
+       public ActionResult<double> GetTimeAngleCalculationFromDateTime([FromQuery] DateTime time)
+       {
+              try
+              {
+                     return _clockAngleService.CalculateTimeAngle(time.Hour, time.Minute);
+              }
+              catch (ArgumentException e)
+              {
+                     return BadRequest(new ErrorResponse(e.Message));
+              }
+       }
 
        /// <summary>
        /// Calculates the angle of the clock hands based on the hour and minute passed. 
@@ -42,11 +58,13 @@ public class TimeAngleController : ControllerBase
        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
        public ActionResult<double> GetTimeAngleCalculation(int hour, int minute)
        {
-              if (hour < 0 || hour > 23 || minute < 0 || minute > 59)
+              try
               {
-                     return BadRequest(new ErrorResponse("Invalid hour/minute, hour must be between 0 and 23 and minute must be between 0 and 59"));
+                     return _clockAngleService.CalculateTimeAngle(hour, minute);
               }
-              
-              return _clockAngleService.CalculateTimeAngle(hour, minute);
+              catch (ArgumentException e)
+              {
+                     return BadRequest(new ErrorResponse(e.Message));
+              }
        }
 }
