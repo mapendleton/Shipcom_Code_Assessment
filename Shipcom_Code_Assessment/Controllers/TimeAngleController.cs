@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc;
 using Shipcom_Code_Assessment.Models;
 
 namespace Shipcom_Code_Assessment.Controllers;
 
 [ApiController]
+[ApiVersion("1.0")]
+[Route("v{version:apiVersion}/[controller]")]
 public class TimeAngleController : ControllerBase
 {
        /// <summary>
@@ -11,7 +14,8 @@ public class TimeAngleController : ControllerBase
        /// </summary>
        /// <param name="time">DateTime to get angle from. Ex : 2025-08-19 21:14:00</param>
        /// <returns>The sum of the hour hand and minute hand angles.</returns>
-       [HttpGet("/calculateTimeAngleFromDateTime")]
+       [HttpGet("calculateTimeAngleFromDateTime")]
+       [MapToApiVersion("1.0")]
        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(double))]
        [ProducesResponseType(StatusCodes.Status400BadRequest)]
        public ActionResult<double> GetTimeAngleCalculationFromDateTime([FromQuery] DateTime time) => 
@@ -24,7 +28,8 @@ public class TimeAngleController : ControllerBase
        /// <param name="minute">60 minutes in an hour, any number outside 0 - 59 will return a 400</param>
        /// <returns>The sum of the hour hand and minute hand angles.</returns>
        /// <response code="400">If hour or minute is out of range</response>
-       [HttpGet("/calculateTimeAngle/{hour}/{minute}")]
+       [HttpGet("calculateTimeAngle/{hour}/{minute}")]
+       [MapToApiVersion("1.0")]
        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(double))]
        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
        public ActionResult<double> GetTimeAngleCalculation(int hour, int minute)
