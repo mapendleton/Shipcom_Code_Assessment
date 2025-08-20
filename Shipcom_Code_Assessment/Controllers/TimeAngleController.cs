@@ -22,7 +22,7 @@ public class TimeAngleController : ControllerBase
        /// </summary>
        /// <param name="time">DateTime to get angle from. Ex : 2025-08-19 21:14:00</param>
        /// <returns>The sum of the hour hand and minute hand angles.</returns>
-       [HttpGet("calculateTimeAngleFromDateTime")]
+       [HttpGet("CalculateTimeAngleFromDateTime")]
        [MapToApiVersion("1.0")]
        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(double))]
        [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -36,7 +36,7 @@ public class TimeAngleController : ControllerBase
        /// <param name="minute">60 minutes in an hour, any number outside 0 - 59 will return a 400</param>
        /// <returns>The sum of the hour hand and minute hand angles.</returns>
        /// <response code="400">If hour or minute is out of range</response>
-       [HttpGet("calculateTimeAngle/{hour}/{minute}")]
+       [HttpGet("CalculateTimeAngle/{hour}/{minute}")]
        [MapToApiVersion("1.0")]
        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(double))]
        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]

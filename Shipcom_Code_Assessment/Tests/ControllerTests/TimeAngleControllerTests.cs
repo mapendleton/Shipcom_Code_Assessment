@@ -22,7 +22,7 @@ public class TimeAngleControllerTests : IClassFixture<WebApplicationFactory<Prog
     [InlineData(14, 12, 138)]
     public async Task GetTimeAngleCalculation_ReturnsCorrectAngles(int hour, int  minute, double expectedAngle)
     {
-        var response = await _client.GetAsync($"/v1/TimeAngle/calculateTimeAngle/{hour}/{minute}");
+        var response = await _client.GetAsync($"/v1/TimeAngle/CalculateTimeAngle/{hour}/{minute}");
         response.EnsureSuccessStatusCode();
         
         var result = await response.Content.ReadAsStringAsync();
@@ -35,7 +35,7 @@ public class TimeAngleControllerTests : IClassFixture<WebApplicationFactory<Prog
     [InlineData(23, 60)]
     public async Task GetTimeAngleCalculation_ReturnsBadRequest(int hour, int minute)
     {
-        var response = await _client.GetAsync($"/v1/TimeAngle/calculateTimeAngle/{hour}/{minute}");
+        var response = await _client.GetAsync($"/v1/TimeAngle/CalculateTimeAngle/{hour}/{minute}");
         
         Assert.Equal(HttpStatusCode.BadRequest, response.StatusCode);
     }
@@ -43,7 +43,7 @@ public class TimeAngleControllerTests : IClassFixture<WebApplicationFactory<Prog
     [Fact]
     public async Task GetTimeAngleCalculationFromDateTime_ReturnsSuccess()
     {
-        var response = await _client.GetAsync($"/v1/TimeAngle/calculateTimeAngleFromDateTime?time={DateTime.Now}");
+        var response = await _client.GetAsync($"/v1/TimeAngle/CalculateTimeAngleFromDateTime?time={DateTime.Now}");
         response.EnsureSuccessStatusCode();
     }
 }
