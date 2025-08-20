@@ -1,6 +1,7 @@
 using System.Reflection;
 using Asp.Versioning;
 using Microsoft.OpenApi.Models;
+using Shipcom_Code_Assessment.Services;
 
 namespace Shipcom_Code_Assessment;
 
@@ -9,6 +10,7 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+        
         builder.Services.AddSwaggerGen(options =>
             {
                 options.SwaggerDoc("v1", new OpenApiInfo
@@ -22,8 +24,7 @@ public class Program
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 options.IncludeXmlComments(xmlPath);
             });
-        builder.Services.AddControllers();
-
+        
         builder.Services.AddApiVersioning(options =>
             {
                 options.ReportApiVersions = true;
@@ -37,6 +38,8 @@ public class Program
                 options.SubstituteApiVersionInUrl = true;
             });
 
+        builder.Services.AddControllers();
+        builder.Services.AddScoped<IClockAngleService, ClockAngleService>();
 
         var app = builder.Build();
 
