@@ -19,6 +19,7 @@ public class TimeAngleControllerTests : IClassFixture<WebApplicationFactory<Prog
     [InlineData(9, 30, 465)]
     [InlineData(12, 0, 0)]
     [InlineData(4, 3, 139.5)]
+    [InlineData(14, 12, 138)]
     public async Task GetTimeAngleCalculation_ReturnsCorrectAngles(int hour, int  minute, double expectedAngle)
     {
         var response = await _client.GetAsync($"/calculateTimeAngle/{hour}/{minute}");
